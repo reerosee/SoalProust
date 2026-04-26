@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hukum Perbandingan Tetap</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#43e97b,#38f9d7);margin:0;padding:20px;}
+.container{max-width:900px;margin:auto;}
+.card{background:white;padding:25px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.15);}
+h2{text-align:center;margin-bottom:6px;}
+.subtitle{text-align:center;color:#666;font-size:14px;margin-bottom:20px;}
+.topic-header{background:linear-gradient(135deg,#43e97b,#38f9d7);color:white;padding:12px 18px;border-radius:10px;margin-bottom:20px;font-weight:600;font-size:15px;}
+.progress-label{font-size:12px;color:#888;text-align:right;margin-bottom:5px;}
+.progress{height:10px;background:#ddd;border-radius:10px;overflow:hidden;margin-bottom:20px;}
+.progress-bar{height:100%;width:0%;background:#43e97b;transition:0.3s;}
+.question{margin-bottom:20px;padding:15px;border-radius:10px;background:#f9fafc;}
+.question p{font-weight:600;margin-bottom:8px;}
+label{display:block;padding:8px 10px;margin:5px 0;border-radius:8px;cursor:pointer;transition:0.2s;border:1px solid transparent;}
+label:hover{background:#e8fdf3;border-color:#a0eac4;}
+button{padding:12px 18px;border:none;border-radius:10px;font-size:16px;cursor:pointer;margin:10px 5px;font-family:'Poppins',sans-serif;}
+.btn-submit{background:#43e97b;color:white;}
+.btn-reset{background:#f44336;color:white;}
+.result{text-align:center;font-size:22px;font-weight:bold;margin-top:20px;}
+.result-detail{text-align:center;font-size:14px;color:#555;margin-top:8px;margin-bottom:10px;}
+.explanation{margin-top:8px;font-size:13.5px;line-height:1.6;padding:8px 10px;border-radius:6px;background:#f0f0f0;}
+.correct{color:green;font-weight:600;}
+.wrong{color:red;font-weight:600;}
+sub{vertical-align:sub;font-size:0.8em;}
+sup{vertical-align:super;font-size:0.8em;}
+.option-label{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#e0e0e0;font-size:12px;font-weight:600;margin-right:8px;}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+<h2>🧪 Latihan Soal</h2>
+<p class="subtitle">Hukum-Hukum Dasar Kimia &mdash; 10 Soal Pilihan Ganda</p>
+<div class="topic-header">📐 Hukum Perbandingan Tetap (Proust)</div>
+<div class="progress-label"><span id="progressLabel">0 / 10 dijawab</span></div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<form id="quizForm"></form>
+<div style="text-align:center">
+  <button class="btn-submit" onclick="submitQuiz()">✅ Selesai</button>
+  <button class="btn-reset" onclick="resetQuiz()">🔄 Reset</button>
+</div>
+<div class="result" id="result"></div>
+<div class="result-detail" id="resultDetail"></div>
+</div>
+</div>
+<script>
+const questions = [
+  {
+    q:"1. Analisis senyawa air menunjukkan mengandung 88,9% oksigen dan 11,1% hidrogen. Jika 36 g air diuraikan, massa hidrogen yang diperoleh adalah...",
+    options:["2 g","3 g","4 g","5 g","6 g"],
+    answer:2,
+    explanation:"Massa H = 11,1% × 36 g = 4 g. Komposisi ini selalu tetap sesuai hukum Proust."
+  },
+  {
+    q:"2. Senyawa X mengandung 40% kalsium, 12% karbon, dan 48% oksigen. Jika terdapat 25 g senyawa X, massa oksigen di dalamnya adalah...",
+    options:["8 g","10 g","12 g","15 g","20 g"],
+    answer:2,
+    explanation:"Massa O = 48% × 25 g = 12 g. Perbandingan massa unsur dalam senyawa selalu tetap."
+  },
+  {
+    q:"3. Hukum Proust menyatakan bahwa perbandingan massa unsur dalam senyawa selalu tetap. Manakah yang PALING menjelaskan mengapa hal ini terjadi?",
+    options:[
+      "Setiap unsur memiliki massa atom yang berbeda-beda",
+      "Reaksi kimia selalu menghasilkan produk yang sama",
+      "Setiap molekul senyawa memiliki rumus kimia yang sama sehingga perbandingan atom selalu tetap",
+      "Massa atom tidak dapat diubah oleh reaksi kimia",
+      "Senyawa selalu terbentuk dari dua unsur saja"
+    ],
+    answer:2,
+    explanation:"Karena setiap molekul suatu senyawa memiliki rumus kimia yang tetap (misalnya H<sub>2</sub>O selalu 2H dan 1O), maka perbandingan massa penyusunnya pun selalu sama."
+  },
+  {
+    q:"4. Sampel I: 18 g H<sub>2</sub>O → 2 g H dan 16 g O. Sampel II: 9 g H<sub>2</sub>O → 1 g H dan 8 g O. Kesimpulan yang mendukung hukum Proust adalah...",
+    options:[
+      "Massa air berbeda maka komposisinya juga berbeda",
+      "Sampel I memiliki oksigen lebih banyak sehingga lebih murni",
+      "Perbandingan H:O = 1:8 pada kedua sampel, membuktikan perbandingan tetap",
+      "Perbandingan berubah sesuai massa sampel",
+      "Tidak ada kesimpulan yang dapat diambil dari dua data"
+    ],
+    answer:2,
+    explanation:"Kedua sampel menunjukkan H:O = 1:8 (massa), membuktikan hukum perbandingan tetap berlaku tak peduli jumlah sampelnya."
+  },
+  {
+    q:"5. Tiga sampel CaCO<sub>3</sub> berturut-turut bermassa 50 g, 100 g, dan 200 g (Mr CaCO<sub>3</sub>=100; Ar Ca=40). Persentase massa Ca dalam masing-masing sampel adalah...",
+    options:[
+      "20%, 40%, 80%",
+      "40%, 40%, 40%",
+      "40%, 20%, 10%",
+      "Bergantung pada sumber CaCO<sub>3</sub>",
+      "Berbeda karena massanya berbeda"
+    ],
+    answer:1,
+    explanation:"% Ca = (40/100) × 100% = 40% pada semua sampel, karena komposisi senyawa murni selalu tetap (hukum Proust)."
+  },
+  {
+    q:"6. Dalam sintesis air, digunakan 6 g H<sub>2</sub> dan 32 g O<sub>2</sub> (perbandingan massa H:O = 1:8). Massa H<sub>2</sub>O yang terbentuk dan zat yang bersisa adalah...",
+    options:[
+      "38 g air, tidak ada sisa",
+      "36 g air, sisa O<sub>2</sub> 2 g",
+      "36 g air, sisa H<sub>2</sub> 2 g",
+      "32 g air, sisa H<sub>2</sub> 6 g",
+      "54 g air, ada sisa O<sub>2</sub>"
+    ],
+    answer:2,
+    explanation:"Untuk 32 g O<sub>2</sub>, H<sub>2</sub> yang dibutuhkan = 32/8 = 4 g. H<sub>2</sub> sisa = 6 − 4 = 2 g. H<sub>2</sub>O = 32 + 4 = 36 g."
+  },
+  {
+    q:"7. Ilmuwan A: 7 g Fe + 4 g S → 11 g FeS. Ilmuwan B: 14 g Fe + 8 g S → 22 g FeS. Manakah analisis yang BENAR?",
+    options:[
+      "Mereka membuat senyawa berbeda karena berasal dari lab berbeda",
+      "Perbandingan Fe:S = 7:4 pada keduanya, mendukung hukum perbandingan tetap",
+      "Ilmuwan B lebih efisien karena menggunakan lebih banyak bahan",
+      "Komposisi FeS bergantung pada kondisi laboratorium",
+      "Hasil percobaan tidak dapat dibandingkan karena skalanya berbeda"
+    ],
+    answer:1,
+    explanation:"Perbandingan Fe:S = 7:4 pada kedua percobaan. Ini membuktikan bahwa perbandingan massa unsur dalam senyawa selalu tetap, tidak bergantung pada sumber atau skala."
+  },
+  {
+    q:"8. Glukosa (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>, Mr=180) mengandung C, H, dan O. Persentase massa karbon adalah... (Ar: C=12, H=1, O=16)",
+    options:["33,3%","36%","40%","45%","46,7%"],
+    answer:2,
+    explanation:"Massa C dalam 1 mol = 6 × 12 = 72 g. % C = (72/180) × 100% = 40%. Persentase ini selalu tetap untuk setiap sampel glukosa."
+  },
+  {
+    q:"9. Seorang siswa menemukan bahwa dua sampel 'besi sulfida' dari sumber berbeda memiliki perbandingan Fe:S yang sedikit berbeda. Kesimpulan yang PALING logis adalah...",
+    options:[
+      "Hukum Proust tidak berlaku untuk senyawa logam",
+      "Perbandingan tetap hanya berlaku pada suhu tertentu",
+      "Kedua sampel pasti senyawa yang identik",
+      "Salah satu sampel mungkin tidak murni atau berupa campuran, bukan senyawa murni",
+      "Dalton salah dalam menyusun teori atom"
+    ],
+    answer:3,
+    explanation:"Jika senyawa murni, perbandingan massa pasti tetap. Perbedaan perbandingan menunjukkan adanya pengotor atau sampel tersebut adalah campuran, bukan senyawa murni."
+  },
+  {
+    q:"10. Amonia (NH<sub>3</sub>) mengandung 82,35% N dan 17,65% H. Seseorang mengklaim membuat NH<sub>3</sub> dengan komposisi 80% N dan 20% H. Apa yang PALING mungkin terjadi?",
+    options:[
+      "Ia berhasil membuat varian baru amonia",
+      "Hukum Proust memang bisa dilanggar pada skala tertentu",
+      "Perbandingan berbeda karena tekanan sintesis berbeda",
+      "Ia salah melakukan analisis atau sampelnya mengandung pengotor",
+      "Suhu tinggi menyebabkan perbandingan berubah"
+    ],
+    answer:3,
+    explanation:"Hukum Proust menyatakan komposisi senyawa murni selalu tetap. Jika komposisi berbeda, kemungkinan ada kesalahan analisis atau sampel tidak murni."
+  }
+];
+
+const LABELS=['A','B','C','D','E'];
+const form=document.getElementById('quizForm');
+questions.forEach((item,index)=>{
+  let html=`<div class="question"><p>${item.q}</p>`;
+  item.options.forEach((opt,i)=>{
+    html+=`<label><input type="radio" name="q${index}" value="${i}" onchange="updateProgress()"> <span class="option-label">${LABELS[i]}</span>${opt}</label>`;
+  });
+  html+=`<div id="exp${index}" class="explanation" style="display:none"></div></div>`;
+  form.innerHTML+=html;
+});
+
+function updateProgress(){
+  let a=document.querySelectorAll('input[type=radio]:checked').length;
+  document.getElementById('progressBar').style.width=(a/questions.length*100)+'%';
+  document.getElementById('progressLabel').textContent=`${a} / ${questions.length} dijawab`;
+}
+
+function submitQuiz(){
+  if(event)event.preventDefault();
+  let score=0,unanswered=0;
+  questions.forEach((item,index)=>{
+    const sel=document.querySelector(`input[name="q${index}"]:checked`);
+    const exp=document.getElementById(`exp${index}`);
+    exp.style.display='block';
+    if(sel){
+      if(parseInt(sel.value)===item.answer){score++;exp.innerHTML=`<span class='correct'>✔ Benar!</span> — ${item.explanation}`;}
+      else{exp.innerHTML=`<span class='wrong'>✘ Salah</span> (Jawaban benar: <strong>${LABELS[item.answer]}</strong>) — ${item.explanation}`;}
+    } else {
+      unanswered++;
+      exp.innerHTML=`<span class='wrong'>Tidak dijawab</span> (Jawaban benar: <strong>${LABELS[item.answer]}</strong>) — ${item.explanation}`;
+    }
+  });
+  const nilai=score*10;
+  const grade=nilai>=90?'🏆 Luar Biasa!':nilai>=70?'👍 Bagus!':nilai>=50?'😊 Cukup':'📚 Perlu Belajar Lagi';
+  document.getElementById('result').innerHTML=`Nilai Kamu: ${nilai} &mdash; ${grade}`;
+  document.getElementById('resultDetail').innerHTML=`Benar: ${score} &nbsp;|&nbsp; Salah: ${questions.length-score-unanswered} &nbsp;|&nbsp; Tidak dijawab: ${unanswered}`;
+}
+
+function resetQuiz(){
+  form.reset();
+  document.getElementById('result').innerHTML='';
+  document.getElementById('resultDetail').innerHTML='';
+  document.querySelectorAll('.explanation').forEach(e=>{e.innerHTML='';e.style.display='none';});
+  document.getElementById('progressBar').style.width='0%';
+  document.getElementById('progressLabel').textContent='0 / '+questions.length+' dijawab';
+}
+</script>
+</body>
+</html>
